@@ -34,9 +34,13 @@ public class BlueprintsServices {
     public void addNewBlueprint(Blueprint bp) throws BlueprintPersistenceException {
         bpp.saveBlueprint(bp);
     }
+
+    public void updateBlueprint(String author, String bpname, List<Point> points) throws BlueprintNotFoundException {
+        bpp.updateBlueprint(author, bpname, points);
+    }
     
     public Set<Blueprint> getAllBlueprints() throws ResourceNotFoundException {
-        if (bpp.getAllBlueprints().isEmpty()) throw new ResourceNotFoundException();
+        if (bpp.getAllBlueprints().isEmpty()) throw new ResourceNotFoundException("No se encontraron blueprints");
         Set<Blueprint> filteredBlueprints = new HashSet<Blueprint>();
         for (Blueprint blueprint:bpp.getAllBlueprints()) {
             filteredBlueprints.add(getBlueprintFiltered(blueprint));
@@ -49,25 +53,25 @@ public class BlueprintsServices {
      * @param author blueprint's author
      * @param name blueprint's name
      * @return the blueprint of the given name created by the given author
-     * @throws BlueprintNotFoundException if there is no such blueprint
+     * @throws ResourceNotFoundException if there is no such blueprint
      */
-    public Blueprint getBlueprint(String author,String name) throws BlueprintNotFoundException{
+    public Blueprint getBlueprint(String author,String name) throws ResourceNotFoundException{
         Blueprint bpSearched = null;
         bpSearched = bpp.getBlueprint(author, name);
-        //throw new UnsupportedOperationException("Not supported yet.");
+        if (bpSearched == null) throw new ResourceNotFoundException("The bp " + name + " of the author " + author + " was not found.");
         return bpSearched;
-
     }
     
     /**
      * 
      * @param author blueprint's author
      * @return all the blueprints of the given author
-     * @throws BlueprintNotFoundException if the given author doesn't exist
+     * @throws ResourceNotFoundException if the given author doesn't exist
      */
-    public Set<Blueprint> getBlueprintsByAuthor(String author) throws BlueprintNotFoundException{
+    public Set<Blueprint> getBlueprintsByAuthor(String author) throws ResourceNotFoundException {
         Set<Blueprint> blueprintSet = new HashSet<>();
         blueprintSet = bpp.getAuthorBlueprints(author);
+        if (blueprintSet.isEmpty()) throw new ResourceNotFoundException("The author " + author + " was not found.");
         return blueprintSet;
         //throw new UnsupportedOperationException("Not supported yet.");
     }

@@ -65,20 +65,27 @@ Del anterior diagrama de componentes (de alto nivel), se desprendió el siguient
 	__Y luego enviando una petición GET a: http://localhost:8080/blueprints. Rectifique que, como respuesta, se obtenga un objeto jSON con una lista que contenga el detalle de los planos suministados por defecto, y que se haya aplicado el filtrado de puntos correspondiente.__  
 	Al hacer una petición GET por medio de curl desde consola, evidenciamos que efectivamente se obtiene como respuesta un objeto Json, en caso en que el filtrado es por submuestro:
 	![img_4.png](img_4.png)
-	![img_5.png](img_5.png)
+	![img_5.png](img_5.png)  
 	Y en caso en que el filtrado es por redundancia:  
 	![img_6.png](img_6.png)
 	![img_7.png](img_7.png)
 
 5. __Modifique el controlador para que ahora, acepte peticiones GET al recurso /blueprints/{author}, el cual retorne usando una representación jSON todos los planos realizados por el autor cuyo nombre sea {author}. Si no existe dicho autor, se debe responder con el código de error HTTP 404. Para esto, revise en [la documentación de Spring](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html), sección 22.3.2, el uso de @PathVariable. De nuevo, verifique que al hacer una petición GET -por ejemplo- a recurso http://localhost:8080/blueprints/juan, se obtenga en formato jSON el conjunto de planos asociados al autor 'juan' (ajuste esto a los nombres de autor usados en el punto 2).__
-
-6. Modifique el controlador para que ahora, acepte peticiones GET al recurso /blueprints/{author}/{bpname}, el cual retorne usando una representación jSON sólo UN plano, en este caso el realizado por {author} y cuyo nombre sea {bpname}. De nuevo, si no existe dicho autor, se debe responder con el código de error HTTP 404. 
+	Se realizan los cambios al controlador como se solicitan y la petición GET como se especifica, en nuestro caso, es el autor Santiago quién tiene 2 planos y la respuesta luce:  
+	![img_9.png](img_9.png)  
+	Por otra parte, si se quiere consultar por los blueprints de un autor no existente se obtiene la siguiente respuesta:  
+	![img_17.png](img_17.png)    
+6. __Modifique el controlador para que ahora, acepte peticiones GET al recurso /blueprints/{author}/{bpname}, el cual retorne usando una representación jSON sólo UN plano, en este caso el realizado por {author} y cuyo nombre sea {bpname}. De nuevo, si no existe dicho autor, se debe responder con el código de error HTTP 404.__
+ 	Luego de modifiar el controlador, se realiza una solicitud para consultar especificamente al blueprint "Centro Comercial Santafe" del autor "Santiago" y se obtiene la siguiente respuesta:  
+	![img_11.png](img_11.png)  
+	Mientras que si se hace una petición a un bp que no existe, la respuesta es:  
+	![img_18.png](img_18.png)
 
 
 
 ### Parte II
 
-1.  Agregue el manejo de peticiones POST (creación de nuevos planos), de manera que un cliente http pueda registrar una nueva orden haciendo una petición POST al recurso ‘planos’, y enviando como contenido de la petición todo el detalle de dicho recurso a través de un documento jSON. Para esto, tenga en cuenta el siguiente ejemplo, que considera -por consistencia con el protocolo HTTP- el manejo de códigos de estados HTTP (en caso de éxito o error):
+1.  __Agregue el manejo de peticiones POST (creación de nuevos planos), de manera que un cliente http pueda registrar una nueva orden haciendo una petición POST al recurso ‘planos’, y enviando como contenido de la petición todo el detalle de dicho recurso a través de un documento jSON. Para esto, tenga en cuenta el siguiente ejemplo, que considera -por consistencia con el protocolo HTTP- el manejo de códigos de estados HTTP (en caso de éxito o error):__
 
 	```	java
 	@RequestMapping(method = RequestMethod.POST)	
@@ -89,44 +96,56 @@ Del anterior diagrama de componentes (de alto nivel), se desprendió el siguient
         } catch (XXException ex) {
             Logger.getLogger(XXController.class.getName()).log(Level.SEVERE, null, ex);
             return new ResponseEntity<>("Error bla bla bla",HttpStatus.FORBIDDEN);            
-        }        
- 	
+        }
 	}
-	```	
+ 	```
 
+	La implementación se encuentra en el código.
 
-2.  Para probar que el recurso ‘planos’ acepta e interpreta
+2.  __Para probar que el recurso ‘planos’ acepta e interpreta
     correctamente las peticiones POST, use el comando curl de Unix. Este
     comando tiene como parámetro el tipo de contenido manejado (en este
     caso jSON), y el ‘cuerpo del mensaje’ que irá con la petición, lo
     cual en este caso debe ser un documento jSON equivalente a la clase
-    Cliente (donde en lugar de {ObjetoJSON}, se usará un objeto jSON correspondiente a una nueva orden:
+    Cliente (donde en lugar de {ObjetoJSON}, se usará un objeto jSON correspondiente a una nueva orden:__
 
 	```	
 	$ curl -i -X POST -HContent-Type:application/json -HAccept:application/json http://URL_del_recurso_ordenes -d '{ObjetoJSON}'
-	```	
-
-	Con lo anterior, registre un nuevo plano (para 'diseñar' un objeto jSON, puede usar [esta herramienta](http://www.jsoneditoronline.org/)):
+ 	```
+ 
+	__Con lo anterior, registre un nuevo plano (para 'diseñar' un objeto jSON, puede usar [esta herramienta](http://www.jsoneditoronline.org/)):__
 	
+	__Nota: puede basarse en el formato jSON mostrado en el navegador al consultar una orden con el método GET.__  
+	
+	Se realiza la prueba de que se acepta correctamente la petición POST, creando el siguiente plano:  
+	![img_13.png](img_13.png)
 
-	Nota: puede basarse en el formato jSON mostrado en el navegador al consultar una orden con el método GET.
+3. __Teniendo en cuenta el autor y numbre del plano registrado, verifique que el mismo se pueda obtener mediante una petición GET al recurso '/blueprints/{author}/{bpname}' correspondiente.__  
+   Y lo consultamos para verificar que se registró exitosamente:  
+   ![img_14.png](img_14.png)  
 
-
-3. Teniendo en cuenta el autor y numbre del plano registrado, verifique que el mismo se pueda obtener mediante una petición GET al recurso '/blueprints/{author}/{bpname}' correspondiente.
-
-4. Agregue soporte al verbo PUT para los recursos de la forma '/blueprints/{author}/{bpname}', de manera que sea posible actualizar un plano determinado.
+4. __Agregue soporte al verbo PUT para los recursos de la forma '/blueprints/{author}/{bpname}', de manera que sea posible actualizar un plano determinado.__  
+	El registro que vamos a modificar es:  
+    ![img_14.png](img_14.png)  
+	Se actualiza el registro de Felipe:  
+	![img_19.png](img_19.png)  
+ 	Y se consulta si se agregó el nuevo punto:  
+	![img_16.png](img_16.png)  
 
 
 ### Parte III
 
-El componente BlueprintsRESTAPI funcionará en un entorno concurrente. Es decir, atederá múltiples peticiones simultáneamente (con el stack de aplicaciones usado, dichas peticiones se atenderán por defecto a través múltiples de hilos). Dado lo anterior, debe hacer una revisión de su API (una vez funcione), e identificar:
+__El componente BlueprintsRESTAPI funcionará en un entorno concurrente. Es decir, atederá múltiples peticiones simultáneamente (con el stack de aplicaciones usado, dichas peticiones se atenderán por defecto a través múltiples de hilos). Dado lo anterior, debe hacer una revisión de su API (una vez funcione), e identificar:__  
 
-* Qué condiciones de carrera se podrían presentar?
-* Cuales son las respectivas regiones críticas?
+* __Qué condiciones de carrera se podrían presentar?__  
+	La condición de carrera se puede presentar es en la actualización y consulta simultánea de un plano.  
+* __Cuales son las respectivas regiones críticas?__  
+	La región crítica que se evidencia es cuando se realiza el update del registro.  
 
-Ajuste el código para suprimir las condiciones de carrera. Tengan en cuenta que simplemente sincronizar el acceso a las operaciones de persistencia/consulta DEGRADARÁ SIGNIFICATIVAMENTE el desempeño de API, por lo cual se deben buscar estrategias alternativas.
+__Ajuste el código para suprimir las condiciones de carrera. Tengan en cuenta que simplemente sincronizar el acceso a las operaciones de persistencia/consulta DEGRADARÁ SIGNIFICATIVAMENTE el desempeño de API, por lo cual se deben buscar estrategias alternativas.__  
 
-Escriba su análisis y la solución aplicada en el archivo ANALISIS_CONCURRENCIA.txt
+__Escriba su análisis y la solución aplicada en el archivo ANALISIS_CONCURRENCIA.txt__  
+	Con el fin de evitar estas condiciones de carrera que se pueden presentar al acceder al tiempo a mismos recursos, se usa como colección un Map concurrente en lugar de un Map común, en específico ConcurrentHashMap. Debido a que, esta colección se divide en segmentos, donde cada uno de estos actúa de forma independiente como un Map, por lo tanto, cuando varios hilos realizan operaciones solo requieren de un segmento específico para completarlas, lo que hace que no sea necesario bloquear toda la colección.  
 
 #### Criterios de evaluación
 

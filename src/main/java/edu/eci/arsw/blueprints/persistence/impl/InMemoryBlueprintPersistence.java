@@ -13,6 +13,7 @@ import edu.eci.arsw.blueprints.persistence.BlueprintsPersistence;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
@@ -21,7 +22,7 @@ import java.util.*;
 @Service
 public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
 
-    private final Map<Tuple<String,String>,Blueprint> blueprints=new HashMap<>();
+    private final ConcurrentHashMap<Tuple<String,String>,Blueprint> blueprints=new ConcurrentHashMap<>();
 
     public InMemoryBlueprintPersistence() {
         //load stub data
@@ -48,20 +49,20 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
             throw new BlueprintPersistenceException("The given blueprint already exists: "+bp);
         }
         else{
-            blueprints.put(new Tuple<>(bp.getAuthor(),bp.getName()), bp);
+            blueprints.putIfAbsent(new Tuple<>(bp.getAuthor(),bp.getName()), bp);
         }        
     }
 
     @Override
-    public Blueprint getBlueprint(String author, String bprintname) throws BlueprintNotFoundException {
+    public Blueprint getBlueprint(String author, String bprintname) {
         return blueprints.get(new Tuple<>(author, bprintname));
     }
 
     @Override
-    public Set<Blueprint> getAuthorBlueprints(String author) throws BlueprintNotFoundException {
+    public Set<Blueprint> getAuthorBlueprints(String author) {
         Set<Blueprint> blueprintSet = new HashSet<>();
         for (Tuple tuple :blueprints.keySet()){
-            if(author == tuple.getElem1()) {
+            if(author.equals(tuple.getElem1())) {
                 blueprintSet.add(blueprints.get(tuple));
             }
         }
@@ -81,6 +82,16 @@ public class InMemoryBlueprintPersistence implements BlueprintsPersistence{
     @Override
     public void putBlueprintFiltered(Blueprint bpf){
         blueprints.put(new Tuple<>(bpf.getAuthor(), bpf.getName()), bpf);
+    }
+
+    @Override
+    public void updateBlueprint(String author, String bpname, List<Point> points) throws BlueprintNotFoundException {
+        if (!blueprints.containsKey(new Tuple<>(author,bpname))){
+            throw new BlueprintNotFoundException("The given blueprint " + bpname + " from " + author + " doesn't exist.");
+        }
+        else{
+            blueprints.get(new Tuple<>(author,bpname)).setPoints(points);
+        }
     }
     
 }

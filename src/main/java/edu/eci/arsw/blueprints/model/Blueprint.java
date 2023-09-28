@@ -90,7 +90,8 @@ public class Blueprint {
     public void removePoint (int index) {
         points.remove(index);
     }
-    
-    
-    
+
+    public void setPoints(List<Point> points) {
+        this.points = points;
+    }
 }

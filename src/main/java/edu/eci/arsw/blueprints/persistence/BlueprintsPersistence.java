@@ -6,7 +6,9 @@
 package edu.eci.arsw.blueprints.persistence;
 
 import edu.eci.arsw.blueprints.model.Blueprint;
+import edu.eci.arsw.blueprints.model.Point;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,16 +32,15 @@ public interface BlueprintsPersistence {
      * @return the blueprint of the given name and author
      * @throws BlueprintNotFoundException if there is no such blueprint
      */
-    public Blueprint getBlueprint(String author,String bprintname) throws BlueprintNotFoundException;
+    public Blueprint getBlueprint(String author,String bprintname);
 
 
     /**
      *
      * @param author blueprint's author
      * @return a set of blueprints of the given author
-     * @throws BlueprintNotFoundException if there is no such blueprint
      */
-    public Set<Blueprint> getAuthorBlueprints(String author) throws BlueprintNotFoundException;
+    public Set<Blueprint> getAuthorBlueprints(String author);
 
     /**
      *
@@ -48,5 +49,13 @@ public interface BlueprintsPersistence {
     public Set<Blueprint> getAllBlueprints();
 
     public void putBlueprintFiltered(Blueprint BPF);
+
+    /**
+     *
+     * @param bp the blueprint to update
+     * @throws BlueprintNotFoundException if the blueprint doesn't exist,
+     *    or any other low-level persistence error occurs.
+     */
+    public void updateBlueprint (String author, String bpname, List<Point> points) throws BlueprintNotFoundException;
 
 }
