@@ -64,22 +64,22 @@ Del anterior diagrama de componentes (de alto nivel), se desprendió el siguient
 	```
 	__Y luego enviando una petición GET a: http://localhost:8080/blueprints. Rectifique que, como respuesta, se obtenga un objeto jSON con una lista que contenga el detalle de los planos suministados por defecto, y que se haya aplicado el filtrado de puntos correspondiente.__  
 	Al hacer una petición GET por medio de curl desde consola, evidenciamos que efectivamente se obtiene como respuesta un objeto Json, en caso en que el filtrado es por submuestro:
-	![img_4.png](img_4.png)
-	![img_5.png](img_5.png)  
+	![img_4.png](img/img_4.png)
+	![img_5.png](img/img_5.png)  
 	Y en caso en que el filtrado es por redundancia:  
-	![img_6.png](img_6.png)
-	![img_7.png](img_7.png)
+	![img_6.png](img/img_6.png)
+	![img_7.png](img/img_7.png)
 
 5. __Modifique el controlador para que ahora, acepte peticiones GET al recurso /blueprints/{author}, el cual retorne usando una representación jSON todos los planos realizados por el autor cuyo nombre sea {author}. Si no existe dicho autor, se debe responder con el código de error HTTP 404. Para esto, revise en [la documentación de Spring](http://docs.spring.io/spring/docs/current/spring-framework-reference/html/mvc.html), sección 22.3.2, el uso de @PathVariable. De nuevo, verifique que al hacer una petición GET -por ejemplo- a recurso http://localhost:8080/blueprints/juan, se obtenga en formato jSON el conjunto de planos asociados al autor 'juan' (ajuste esto a los nombres de autor usados en el punto 2).__
 	Se realizan los cambios al controlador como se solicitan y la petición GET como se especifica, en nuestro caso, es el autor Santiago quién tiene 2 planos y la respuesta luce:  
-	![img_9.png](img_9.png)  
+	![img_9.png](img/img_9.png)  
 	Por otra parte, si se quiere consultar por los blueprints de un autor no existente se obtiene la siguiente respuesta:  
-	![img_17.png](img_17.png)    
+	![img_17.png](img/img_17.png)    
 6. __Modifique el controlador para que ahora, acepte peticiones GET al recurso /blueprints/{author}/{bpname}, el cual retorne usando una representación jSON sólo UN plano, en este caso el realizado por {author} y cuyo nombre sea {bpname}. De nuevo, si no existe dicho autor, se debe responder con el código de error HTTP 404.__
  	Luego de modifiar el controlador, se realiza una solicitud para consultar especificamente al blueprint "Centro Comercial Santafe" del autor "Santiago" y se obtiene la siguiente respuesta:  
-	![img_11.png](img_11.png)  
+	![img_11.png](img/img_11.png)  
 	Mientras que si se hace una petición a un bp que no existe, la respuesta es:  
-	![img_18.png](img_18.png)
+	![img_18.png](img/img_18.png)
 
 
 
@@ -118,19 +118,19 @@ Del anterior diagrama de componentes (de alto nivel), se desprendió el siguient
 	__Nota: puede basarse en el formato jSON mostrado en el navegador al consultar una orden con el método GET.__  
 	
 	Se realiza la prueba de que se acepta correctamente la petición POST, creando el siguiente plano:  
-	![img_13.png](img_13.png)
+	![img_13.png](img/img_13.png)
 
 3. __Teniendo en cuenta el autor y numbre del plano registrado, verifique que el mismo se pueda obtener mediante una petición GET al recurso '/blueprints/{author}/{bpname}' correspondiente.__  
    Y lo consultamos para verificar que se registró exitosamente:  
-   ![img_14.png](img_14.png)  
+   ![img_14.png](img/img_14.png)  
 
 4. __Agregue soporte al verbo PUT para los recursos de la forma '/blueprints/{author}/{bpname}', de manera que sea posible actualizar un plano determinado.__  
 	El registro que vamos a modificar es:  
-    ![img_14.png](img_14.png)  
+    ![img_14.png](img/img_14.png)  
 	Se actualiza el registro de Felipe:  
-	![img_19.png](img_19.png)  
+	![img_19.png](img/img_19.png)  
  	Y se consulta si se agregó el nuevo punto:  
-	![img_16.png](img_16.png)  
+	![img_16.png](img/img_16.png)  
 
 
 ### Parte III
