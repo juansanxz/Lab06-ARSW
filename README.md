@@ -3,14 +3,16 @@
 
 ## Construción de un cliente 'grueso' con un API REST, HTML5, Javascript y CSS3. Parte I.
 
+
+
+
+### Integrantes
+#### Santiago Arévalo Rojas
+#### Juan Felipe Sánchez Pérez
+
 ### Trabajo individual o en parejas. A quienes tuvieron malos resultados en el parcial anterior se les recomienda hacerlo individualmente.
 
-
-## Integrantes
-# Santiago Arévalo Rojas
-# Juan Felipe Sánchez Pérez
-
-![](img/mock.png)
+![img_9.png](img_9.png)
 
 * __Al oprimir 'Get blueprints', consulta los planos del usuario dado en el formulario. Por ahora, si la consulta genera un error, sencillamente no se mostrará nada.__
 * __Al hacer una consulta exitosa, se debe mostrar un mensaje que incluya el nombre del autor, y una tabla con: el nombre de cada plano de autor, el número de puntos del mismo, y un botón para abrirlo. Al final, se debe mostrar el total de puntos de todos los planos (suponga, por ejemplo, que la aplicación tienen un modelo de pago que requiere dicha información).__
@@ -109,10 +111,20 @@
 	* __Sobre el listado resultante, haga otro 'map', que tome cada uno de estos elementos, y a través de jQuery agregue un elemento \<tr\> (con los respectvos \<td\>) a la tabla creada en el punto 4. Tenga en cuenta los [selectores de jQuery](https://www.w3schools.com/JQuery/jquery_ref_selectors.asp) y [los tutoriales disponibles en línea](https://www.tutorialrepublic.com/codelab.php?topic=faq&file=jquery-append-and-remove-table-row-dynamically). Por ahora no agregue botones a las filas generadas.__
 
 	* __Sobre cualquiera de los dos listados (el original, o el transformado mediante 'map'), aplique un 'reduce' que calcule el número de puntos. Con este valor, use jQuery para actualizar el campo correspondiente dentro del DOM.__  
+    Cómo aun no se ha implementado la funcionalidad del botón "Get Blueprints", se realizó el llamado a las funciones dentro el app.js:  
+   ![img_11.png](img_11.png)  
+   Una vez agregadas las operaciones descritas anteriormente, al ejecutar la aplicación web, se actualiza la tabla y la cantidad de puntos del autor especificado:  
+   ![img_10.png](img_10.png)
+    
 
-5. Asocie la operación antes creada (la de app.js) al evento 'on-click' del botón de consulta de la página.
+5. Asocie la operación antes creada (la de app.js) al evento 'on-click' del botón de consulta de la página.  
+Se realiza la implementación correspondiente para que al hacer click, se muestren los planos del autor indicado en el input.  
+![img_12.png](img_12.png)  
 
-6. Verifique el funcionamiento de la aplicación. Inicie el servidor, abra la aplicación HTML5/JavaScript, y rectifique que al ingresar un usuario existente, se cargue el listado del mismo.
+6. Verifique el funcionamiento de la aplicación. Inicie el servidor, abra la aplicación HTML5/JavaScript, y rectifique que al ingresar un usuario existente, se cargue el listado del mismo.  
+Se hacen las pruebas con los autores y sus blueprintss quemados en el código de la aplicación.  
+![img_13.png](img_13.png)  
+![img_12.png](img_12.png)  
 
 ## Para la próxima semana
 

@@ -5,40 +5,49 @@ var blueprintsModule = (function()  {
     return {
       setAuthor: function(newAuthor) {
         author = newAuthor;
+        blueprintsModule.setBpsByAuthor(author);
+        $("#authorNameText").text("Name of Author: " + author);
       },
+
       getAuthor: function() {
         return author;
       },
+
       setBpsByAuthor: function(authorToFind) {
-        bps = apimock.getBlueprintsByAuthor(authorToFind, function(blueprints) {
+        apimock.getBlueprintsByAuthor(authorToFind, function(blueprints) {
             var transformedBlueprints = blueprints.map(function(bp) {
                 return {
                     name: bp.name,
                     numPoints: bp.points.length
                 }
             });
-            console.log(transformedBlueprints);
-            return transformedBlueprints;
+            bps = transformedBlueprints;
         });
-        console.log(bps);
+
         var table = $("#blueprintTable");
         var rowsToAdd= bps.map(function(bp) {
           var newRow = $("<tr>");
           newRow.append("<td>" + bp.name + "</td>");
           newRow.append("<td>" + bp.numPoints + "</td>");
           newRow.append("<td><button>Open</button></td>");
+          newRow.append("</tr>");
           return newRow;
         });
-
+        $("#blueprintTable tr:not(:first-child)").remove();
         table.append(rowsToAdd);
+        var pointsNumber = bps.reduce(function(sum, bp) {
+            return sum + bp.numPoints;
+        },0);
+
+        $("#totalUserPoints").text("Total user points: " + pointsNumber);
 
         },
+
         getBps: function() {
             return bps;
         }
      }
 })();
 
-blueprintsModule.setAuthor("johnconnor");
-console.log(blueprintsModule.getAuthor());
-blueprintsModule.setBpsByAuthor("johnconnor");
+//blueprintsModule.setAuthor("johnconnor");
+//blueprintsModule.setBpsByAuthor("johnconnor");
