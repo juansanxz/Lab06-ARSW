@@ -12,7 +12,7 @@
 
 ### Trabajo individual o en parejas. A quienes tuvieron malos resultados en el parcial anterior se les recomienda hacerlo individualmente.
 
-![img_9.png](img_9.png)
+![img_9.png](img/img_9.png)
 
 * __Al oprimir 'Get blueprints', consulta los planos del usuario dado en el formulario. Por ahora, si la consulta genera un error, sencillamente no se mostrará nada.__
 * __Al hacer una consulta exitosa, se debe mostrar un mensaje que incluya el nombre del autor, y una tabla con: el nombre de cada plano de autor, el número de puntos del mismo, y un botón para abrirlo. Al final, se debe mostrar el total de puntos de todos los planos (suponga, por ejemplo, que la aplicación tienen un modelo de pago que requiere dicha información).__
@@ -75,10 +75,10 @@
     http://localhost:8080/index.html
     ```
    Ejecutando la aplicación y creando el archivo index.html con los elementos especificados, la página web se ve así:  
-	![img_2.png](img_2.png)
+	![img_2.png](img/img_2.png)
 	2. __Al abrir la consola de desarrollador del navegador, NO deben aparecer mensajes de error 404 (es decir, que las librerías de JavaScript se cargaron correctamente).__  
    Como se ve a conitnuación, no aparecen mensajes de error en la consola del desarrolador.
-   ![img_3.png](img_3.png)
+   ![img_3.png](img/img_3.png)
 
 ## Front-End - Lógica
 
@@ -86,7 +86,7 @@
 
 2. __Copie el módulo provisto (apimock.js) en la misma ruta del módulo antes creado. En éste agréguele más planos (con más puntos) a los autores 'quemados' en el código.__  
     Se copia el módulo apimock.js y se agrega un plano a cada uno de los autores:  
-    ![img_4.png](img_4.png)  
+    ![img_4.png](img/img_4.png)  
 
 
 3. __Agregue la importación de los dos nuevos módulos a la página HTML (después de las importaciones de las librerías de jQuery y Bootstrap):__
@@ -101,8 +101,8 @@
 
    __Junto con una operación pública que permita cambiar el nombre del autor actualmente seleccionado.__  
     Se realizó la implementación solicitada. Realizando una prueba, estableciendo el nombre del autor e imprimiendolo en consola, se comprueba el funcionamiento de la función creada:  
-    ![img_5.png](img_5.png)  
-    ![img_7.png](img_7.png)  
+    ![img_5.png](img/img_5.png)  
+    ![img_7.png](img/img_7.png)  
 
 4. __Agregue al módulo 'app.js' una operación pública que permita actualizar el listado de los planos, a partir del nombre de su autor (dado como parámetro). Para hacer esto, dicha operación debe invocar la operación 'getBlueprintsByAuthor' del módulo 'apimock' provisto, enviándole como _callback_ una función que:__  
 
@@ -112,25 +112,25 @@
 
 	* __Sobre cualquiera de los dos listados (el original, o el transformado mediante 'map'), aplique un 'reduce' que calcule el número de puntos. Con este valor, use jQuery para actualizar el campo correspondiente dentro del DOM.__  
     Cómo aun no se ha implementado la funcionalidad del botón "Get Blueprints", se realizó el llamado a las funciones dentro el app.js:  
-   ![img_11.png](img_11.png)  
+   ![img_11.png](img/img_11.png)  
    Una vez agregadas las operaciones descritas anteriormente, al ejecutar la aplicación web, se actualiza la tabla y la cantidad de puntos del autor especificado:  
-   ![img_10.png](img_10.png)
+   ![img_10.png](img/img_10.png)
     
 
 5. Asocie la operación antes creada (la de app.js) al evento 'on-click' del botón de consulta de la página.  
 Se realiza la implementación correspondiente para que al hacer click, se muestren los planos del autor indicado en el input.  
-![img_12.png](img_12.png)  
+![img_12.png](img/img_12.png)  
 
 6. Verifique el funcionamiento de la aplicación. Inicie el servidor, abra la aplicación HTML5/JavaScript, y rectifique que al ingresar un usuario existente, se cargue el listado del mismo.  
 Se hacen las pruebas con los autores y sus blueprintss quemados en el código de la aplicación.  
-![img_13.png](img_13.png)  
-![img_12.png](img_12.png)  
+![img_13.png](img/img_13.png)  
+![img_12.png](img/img_12.png)  
 
 ## Para la próxima semana
 
 8. __A la página, agregue un [elemento de tipo Canvas](https://www.w3schools.com/html/html5_canvas.asp), con su respectivo identificador. Haga que sus dimensiones no sean demasiado grandes para dejar espacio para los otros componentes, pero lo suficiente para poder 'dibujar' los planos.__  
 Se añadió el elemento canvas al index.html.  
-![img_14.png](img_14.png)
+![img_14.png](img/img_14.png)
 
 
 9. __Al módulo app.js agregue una operación que, dado el nombre de un autor, y el nombre de uno de sus planos dados como parámetros, haciendo uso del método getBlueprintsByNameAndAuthor de apimock.js y de una función _callback_:__  
@@ -142,26 +142,26 @@ Se implmentó en el app.js.
 
 11. __Verifique que la aplicación ahora permita: consultar los planos de un auto y graficar aquel que se seleccione.__  
 Al escribir el nombre del autor, obtener sus blueprints y dar click en el botón "open" de alguno de ellos, se dibuja el plano en el canvas:  
-![img_15.png](img_15.png)  
+![img_15.png](img/img_15.png)  
 Si abrimos otro blueprint, vemos que se borra el canvas y se dibuja el nuevo plano seleccionado:  
-![img_16.png](img_16.png)  
+![img_16.png](img/img_16.png)  
 Al cambiar de autor, y seleecionar uno de sus planos, se dibuja este correctamente:  
-![img_17.png](img_17.png)  
+![img_17.png](img/img_17.png)  
 
 12. __Una vez funcione la aplicación (sólo front-end), haga un módulo (llámelo 'apiclient') que tenga las mismas operaciones del 'apimock', pero que para las mismas use datos reales consultados del API REST. Para lo anterior revise [cómo hacer peticiones GET con jQuery](https://api.jquery.com/jquery.get/), y cómo se maneja el esquema de _callbacks_ en este contexto.__  
 Se implementó el módulo apiclient con las mismas funciones, pero solicitando los recursos correspondientes a la API Rest elaborada en el laboratorio anterior.  
 Probando el funcionamiento de la aplicación web, verificamos su correcto funcionamiento.  
-![img_18.png](img_18.png)  
+![img_18.png](img/img_18.png)  
 Con otro autor:  
-![img_19.png](img_19.png)  
+![img_19.png](img/img_19.png)  
 
 
 13. __Modifique el código de app.js de manera que sea posible cambiar entre el 'apimock' y el 'apiclient' con sólo una línea de código.__  
 Para esto, creamos la variable currentModule que se modifica según el módulo que se desee usar, y que se emplea en los llamados a las funciones de los módulos.  
 Si se usa apimock, se verifica el funcionamiento:  
-![img_20.png](img_20.png)  
+![img_20.png](img/img_20.png)  
 Si se usa apiclient, se verifica el funcionamiento:  
-![img_21.png](img_21.png)
+![img_21.png](img/img_21.png)
   
 14. __Revise la [documentación y ejemplos de los estilos de Bootstrap](https://v4-alpha.getbootstrap.com/examples/) (ya incluidos en el ejercicio), agregue los elementos necesarios a la página para que sea más vistosa, y más cercana al mock dado al inicio del enunciado.__  
 Se creó el archivo styles.css para que la página se asemeje más al mock.
